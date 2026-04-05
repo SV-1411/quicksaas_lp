@@ -1,28 +1,58 @@
-import { calculateDynamicPrice } from '../../../services/pricing-engine';
-import { evaluateRisk } from '../../../services/risk-engine';
+import express from 'express';
+import cors from 'cors';
+import { createClient } from '@supabase/supabase-js';
+import dotenv from 'dotenv';
 
-export function healthcheck() {
-  return {
-    service: 'gigzs-backend',
-    status: 'ok',
-    pricingSmoke: calculateDynamicPrice({
-      complexityScore: 50,
-      baseRate: 1000,
-      urgencyMultiplier: 5000,
-      resourceLoadFactor: 2000,
-      integrationWeight: 3000,
-      activeProjects: 1100,
-      capacityThreshold: 1000,
-    }),
-    riskSmoke: evaluateRisk({
-      moduleId: 'm',
-      projectId: 'p',
-      freelancerId: 'f',
-      lastSnapshotAt: new Date(Date.now() - 4 * 3600 * 1000).toISOString(),
-      maxSnapshotDelayMinutes: 60,
-      progress: 0.2,
-      expectedProgress: 0.6,
-      dueAt: new Date(Date.now() - 3600 * 1000).toISOString(),
-    }),
-  };
-}
+dotenv.config();
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const supabaseUrl = process.env.SUPABASE_URL || '';
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', service: 'simple-backend' });
+});
+
+// Get all users
+app.get('/users', async (req, res) => {
+  const { data, error } = await supabase
+    .from('app_users')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+
+  res.json(data);
+});
+
+// Add a new user
+app.post('/users', async (req, res) => {
+  const { user_name, details } = req.body;
+
+  if (!user_name) {
+    return res.status(400).json({ error: 'user_name is required' });
+  }
+
+  const { data, error } = await supabase
+    .from('app_users')
+    .insert([{ user_name, details }])
+    .select()
+    .single();
+
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+
+  res.status(201).json(data);
+});
+
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Backend server running on port ${PORT}`);
+});
