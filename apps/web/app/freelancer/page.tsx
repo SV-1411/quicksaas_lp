@@ -11,6 +11,9 @@ import { Badge } from '../../components/ui/badge';
 import { Skeleton } from '../../components/ui/skeleton';
 import FreelancerOnboarding from '../../components/freelancer/onboarding-form';
 
+// Force dynamic rendering to prevent build-time Supabase errors
+export const dynamic = 'force-dynamic';
+
 interface ModuleCard {
   id: string;
   module_name: string;

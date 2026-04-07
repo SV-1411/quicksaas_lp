@@ -8,6 +8,9 @@ import { Card } from '../../components/ui/card';
 import { createSupabaseBrowserClient } from '../../lib/supabase/browser';
 import { Badge } from '../../components/ui/badge';
 
+// Force dynamic rendering to prevent build-time Supabase errors
+export const dynamic = 'force-dynamic';
+
 export default function SecurityPage() {
   const supabase = createSupabaseBrowserClient();
   const [role, setRole] = useState<'client' | 'freelancer' | 'admin'>('freelancer');

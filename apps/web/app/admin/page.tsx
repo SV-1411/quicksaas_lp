@@ -9,6 +9,9 @@ import { Button } from '../../components/ui/button';
 import { Modal } from '../../components/ui/modal';
 import { useToast } from '../../lib/hooks/use-toast';
 
+// Force dynamic rendering to prevent build-time Supabase errors
+export const dynamic = 'force-dynamic';
+
 export default function AdminDashboard() {
   const supabase = createSupabaseBrowserClient();
   const { show } = useToast();

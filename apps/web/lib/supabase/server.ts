@@ -6,6 +6,13 @@ import { env } from '../env';
 export async function createSupabaseServerClient() {
   const cookieStore = await cookies();
 
+  // Check if environment variables are available
+  if (!env.supabaseUrl || !env.supabaseAnonKey) {
+    throw new Error('@supabase/ssr: Your project\'s URL and API key are required to create a Supabase client!\n\n' +
+      'Check your Supabase project\'s API settings to find these values\n\n' +
+      'https://supabase.com/dashboard/project/_/settings/api');
+  }
+
   return createServerClient(env.supabaseUrl, env.supabaseAnonKey, {
     cookies: {
       getAll() {
@@ -19,6 +26,13 @@ export async function createSupabaseServerClient() {
 }
 
 export function createSupabaseServiceClient() {
+  // Check if environment variables are available
+  if (!env.supabaseUrl || !env.supabaseServiceRoleKey) {
+    throw new Error('@supabase/ssr: Your project\'s URL and service role key are required to create a Supabase service client!\n\n' +
+      'Check your Supabase project\'s API settings to find these values\n\n' +
+      'https://supabase.com/dashboard/project/_/settings/api');
+  }
+
   // Uses service_role key — has full DB access, bypasses RLS.
   // NEVER call this from client-side code.
   return createClient(env.supabaseUrl, env.supabaseServiceRoleKey, {

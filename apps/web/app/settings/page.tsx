@@ -12,6 +12,9 @@ import { Slider } from '../../components/ui/slider';
 import { getFontScale, getTheme, setFontScale, setTheme, type ThemeName } from '../../lib/ui-prefs';
 import { useToast } from '../../lib/hooks/use-toast';
 
+// Force dynamic rendering to prevent build-time Supabase errors
+export const dynamic = 'force-dynamic';
+
 const THEMES: Array<{ key: ThemeName; label: string }> = [
   { key: 'starbucks', label: 'Starbucks (Green/White)' },
   { key: 'ocean', label: 'Ocean' },

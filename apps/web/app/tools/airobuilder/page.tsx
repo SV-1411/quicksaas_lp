@@ -10,6 +10,9 @@ import { createSupabaseBrowserClient } from '../../../lib/supabase/browser';
 import { useToast } from '../../../lib/hooks/use-toast';
 import AiroBuilderWorkspace from '../../../components/freelancer/airobuilder-workspace';
 
+// Force dynamic rendering to prevent build-time Supabase errors
+export const dynamic = 'force-dynamic';
+
 export default function AiroBuilderToolsPage() {
   const supabase = createSupabaseBrowserClient();
   const { show } = useToast();

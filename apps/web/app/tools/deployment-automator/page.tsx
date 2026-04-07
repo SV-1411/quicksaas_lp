@@ -9,6 +9,9 @@ import { Button } from '../../../components/ui/button';
 import { Badge } from '../../../components/ui/badge';
 import { createSupabaseBrowserClient } from '../../../lib/supabase/browser';
 
+// Force dynamic rendering to prevent build-time Supabase errors
+export const dynamic = 'force-dynamic';
+
 export default function DeploymentAutomatorPage() {
     const supabase = createSupabaseBrowserClient();
     const [modules, setModules] = useState<any[]>([]);

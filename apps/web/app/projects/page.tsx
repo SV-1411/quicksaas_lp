@@ -11,6 +11,9 @@ import { Trash2, Loader2, ArrowUpRight } from 'lucide-react';
 import { useToast } from '../../lib/hooks/use-toast';
 import { Button } from '../../components/ui/button';
 
+// Force dynamic rendering to prevent build-time Supabase errors
+export const dynamic = 'force-dynamic';
+
 export default function ProjectsPage() {
   const supabase = createSupabaseBrowserClient();
   const [projects, setProjects] = useState<any[]>([]);

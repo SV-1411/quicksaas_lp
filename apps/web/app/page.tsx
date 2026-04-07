@@ -514,10 +514,10 @@ export default function HomePage() {
              <span className="text-sm md:text-base font-mono tracking-[0.5em] uppercase font-bold text-green-600/60">gigzs</span>
              <div className="w-10 h-px bg-green-600/20" />
           </div>
-          <div className="flex flex-col items-end gap-1 text-right">
+          {/* <div className="flex flex-col items-end gap-1 text-right">
              <span className="text-sm md:text-base font-mono tracking-[0.5em] uppercase font-bold text-purple-600/60">godaddy</span>
              <div className="w-10 h-px bg-purple-600/20" />
-          </div>
+          </div> */}
         </div>
 
         {/* Background Interactive Threads — Cinematic Line Animation */}

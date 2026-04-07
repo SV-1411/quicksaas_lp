@@ -23,6 +23,9 @@ import IntakeForm from '../../components/project/intake-form';
 import { useToast } from '../../lib/hooks/use-toast';
 import { cn } from '../../lib/utils';
 
+// Force dynamic rendering to prevent build-time Supabase errors
+export const dynamic = 'force-dynamic';
+
 interface Project {
   id: string;
   title: string;
